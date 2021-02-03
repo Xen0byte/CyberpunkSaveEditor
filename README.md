@@ -1,3 +1,25 @@
+# A statement about the vulnerability I discovered in the game
+
+The vulnerability impacts DATA files. A buffer overflow can be triggered in the game when it loads data files.
+The reason is that the game uses a buffer of 512 bytes to serialize a maximum of 512 wide-characters for identifier strings, and that is 1024 bytes (a wide-character is 2 bytes).
+This buffer overflow can be exploited with the help of a second vulnerability that is a third-party library that the game uses: xinput1_3.dll. This dynamic library is not relocatable and thus is a direct bypass for a security feature called ASLR (Address Space Layour Randomization).
+Also, this library is enough to build a ROP-chain to bypass DEP (Data Execution Prevention) in order to execute code that has been inlined in the overflowed buffer.
+(This ROP-chain won't be disclosed any time soon as it represents a risk not only for CP77 but for every piece of software using it..)
+
+I chose to work on the most scary scenario that is code hidden in harmless-looking save files. When the game does read this file it uses a specific reader object that I use in the shellcode to read more after the 1024 bytes string and thus load an even bigger shellcode.. this second shellcode does different things: it hides the exploit from the file reader so that it can load the original save file afterwards; it reads a payload dll and manually maps it; it repairs the stack to be able to call load_save again; it repairs other things i won't disclose here; it does a copy of the exploit in memory; it hooks the file writing method to be able to inject the exploit in future save files when the game does save or auto-save..
+At this point it is what we could call a virus-dropper worm that would use save files sharing to spread.
+Don't worry though, the only version I shared with trustworthy people is one that crashes the game and has no worm capabilities at all.
+But it is possible someone else found it earlier and kept the information secret, and that's why cdpr relayed the warning to the community.
+
+This is a shared responsiblity between CDPR for the buffer overflow and Microsoft for not providing a safe backward compatible version of xinput to companies in need.
+CDPR did fix the buffer overflow internally, and this fix is expected to arrive with one of the next two patches.
+
+Thanks to yamashi who is currently protecting people from this exploit by patching the first vulnerability dynamically with his mod https://github.com/yamashi/CyberEngineTweaks/ that is used by many.
+
+There wasn't any bug bounty program so I received peanuts for the discovery.
+If you wish to thank me for it, I wouldn't be against being offered a cyberpunk t-shirt ;)
+
+
 # CyberpunkSaveEditor
 A tool to edit Cyberpunk 2077 sav.dat files (join the CP modding discord: https://discord.gg/cp77modding)
 

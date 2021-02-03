@@ -1,6 +1,6 @@
-# A statement about the vulnerability I discovered in the game
+# A quick summary about the vulnerability I found in the game
 
-The vulnerability impacts DATA files. A buffer overflow can be triggered in the game when it loads data files.
+The vulnerability impacts DATA files. A buffer overflow can be triggered in the game when it loads those files.
 The reason is that the game uses a buffer of 512 bytes to serialize a maximum of 512 wide-characters for identifier strings, and that is 1024 bytes (a wide-character is 2 bytes).
 This buffer overflow can be exploited with the help of a second vulnerability that is a third-party library that the game uses: xinput1_3.dll. This dynamic library is not relocatable and thus is a direct bypass for a security feature called ASLR (Address Space Layour Randomization).
 Also, this library is enough to build a ROP-chain to bypass DEP (Data Execution Prevention) in order to execute code that has been inlined in the overflowed buffer.
@@ -16,7 +16,11 @@ CDPR did fix the buffer overflow internally, and this fix is expected to arrive 
 
 Thanks to yamashi who is currently protecting people from this exploit by patching the first vulnerability dynamically with his mod https://github.com/yamashi/CyberEngineTweaks/ that is used by many.
 
+Please mind that it is only about data files.
+Once the vulnerability is patched, only data files will be safe to use again (texture, model mods, saves, etc..), whereas executable mods will remain potentially dangerous and will always be (so at least check their authors and comments about them first).
+
 There wasn't any bug bounty program so I received peanuts for the discovery.
+
 If you wish to thank me for it, I wouldn't be against being offered a cyberpunk t-shirt ;)
 
 

@@ -24,6 +24,7 @@ There wasn't any bug bounty program so I received peanuts for the discovery.
 If you wish to thank me for it, I wouldn't be against being offered a cyberpunk t-shirt ;)
 
 edit: Moonded offered me a trauma team helmet t-shirt :P
+edit2: @Proto2149: yamasushi on the forum is yamashi.
 
 # CyberpunkSaveEditor
 A tool to edit Cyberpunk 2077 sav.dat files (join the CP modding discord: https://discord.gg/cp77modding)

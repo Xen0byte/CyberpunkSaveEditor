@@ -1,7 +1,13 @@
 # A quick summary about the vulnerability I found in the game
 
 The vulnerability impacts DATA files. A buffer overflow can be triggered in the game when it loads those files.
-The reason is that the game uses a buffer of 512 bytes to serialize a maximum of 512 wide-characters for identifier strings, and that is 1024 bytes (a wide-character is 2 bytes).
+
+Reading the reddit posts, I think that the average commenter has not enough creativity to imagine all the ways it can be exploited.
+Someone said you have to download a mod to be at risk. But doesn't see that steam/gog etc use clouds to save your save games.
+I could email-spam people with steam accounts logins with CP77 and an infected save in the cloud.
+Would you honestly have been cautious using this account ??
+
+The reason why a buffer overflow can be triggered is that the game uses a buffer of 512 bytes to serialize a maximum of 512 wide-characters for identifier strings, and that is 1024 bytes (a wide-character is 2 bytes).
 This buffer overflow can be exploited with the help of a second vulnerability that is a third-party library that the game uses: xinput1_3.dll. This dynamic library is not relocatable and thus is a direct bypass for a security feature called ASLR (Address Space Layour Randomization).
 Also, this library is enough to build a ROP-chain to bypass DEP (Data Execution Prevention) in order to execute code that has been inlined in the overflowed buffer.
 (This ROP-chain won't be disclosed any time soon as it represents a risk not only for CP77 but for every piece of software using it..)

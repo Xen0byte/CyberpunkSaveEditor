@@ -1,5 +1,7 @@
 # A quick summary about the vulnerability I found in the game
 
+update: game patch 1.12 is now available and fixes both vulnerabilities, thanks cdpr !
+
 The vulnerability impacts DATA files. A buffer overflow can be triggered in the game when it loads those files.
 
 Reading the reddit posts, I think that the average commenter has not enough creativity to imagine all the ways it can be exploited.
